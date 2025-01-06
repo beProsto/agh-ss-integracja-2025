@@ -109,9 +109,17 @@
 
         // Function to load random images into the grid
         function loadRandomImages() {
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 200; i++) {
                 const img = document.createElement('img');
                 img.src = 'dupa/index_files/'+images[Math.floor(Math.random() * images.length)];
+
+                // Set random position
+                const x = Math.random() * window.innerWidth;  // Random x position within window width
+                const y = Math.random() * window.innerHeight; // Random y position within window height
+                img.style.position = 'absolute';  // Absolute positioning
+                img.style.left = x + 'px';        // Set left position
+                img.style.top = y + 'px';         // Set top position
+
                 imageGrid.appendChild(img);
             }
         }

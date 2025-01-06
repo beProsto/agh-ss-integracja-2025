@@ -92,11 +92,6 @@ footer {
     color: #000;
 }
 
-/* Additional IE6 quirks */
-img {
-    border: 2px solid #000;
-    /* Default image border */
-}
 
 hr {
     border: 1px solid #000;
