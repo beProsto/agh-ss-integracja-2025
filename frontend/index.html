@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <title>Frontend</title>
+        <link rel="stylesheet" href="fire_css.css">
+        <script src="browser.js.js"></script>
+        <style>
+           .rainbow {
+   font-family: 'Arial Black', sans-serif;
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #9c00ff,
+    #ff0000,
+    #ff8800,
+    #ffff00,
+    #02be02,
+    #0000ff,
+    #4f00ff,
+    #9c00ff
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transform: scaleY(1.5) scaleX(0.6);
+  transform-origin: left;
+  display: inline-block;
+  position: relative;
+  font-size: 8rem;
+  
+  &-wrapper {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 8rem;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    perspective: 150px;
+    perspective-origin: bottom center;
+    &:before {
+      position: absolute;
+      content: attr(data-content);
+      transform: rotateX(60deg) skewX(65deg) scaleY(2.8) scaleX(0.9);
+      transform-origin: bottom right;
+      color: black;
+      opacity: 0.2;
+      bottom: -2rem;
+    }
+  }
+}
+        </style>
+    </head>
+    <body>
+        <marquee behavior="scroll" direction="left" scrollamount="10"><span class="rainbow-wrapper" data-content="Rainbow">
+  <span class="rainbow">Welcome to My Frontend Arena! Greetings, web wanderer! You've just stumbled upon the cutting-edge, top-tier digital hangout where HTML dreams come true and JavaScript magic runs wild. This isn't just another website; this is your backstage pass to the cyber showdown of the century!As you prep your bot for the epic Robot Rumble, keep this in mind: only the strongest, fastest, and most hardcore creations survive the virtual gauntlet. Is your bot ready to dominate? Can it crush the competition with next-level hacks and Y2K-level swag? Time to put your skills to the test! So, buckle up and get ready to surf the bandwidth of destiny. This is where legends are coded, and champions are born. Good luck, rookie. See you on the other side of the firewall.</span>
+</span></marquee>
+        <h1>Frontend</h1>
+        
+        <p>Frontend service is running.</p>
+        <table>
+            <tr>
+                <td></td>
+                <td><button onclick="sendMessage('front')">front</button></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button onclick="sendMessage('left')">left</button></td>
+                <td><button onclick="sendMessage('back')">back</button></td>
+                <td><button onclick="sendMessage('right')">right</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="sendMessage('s0')">servo0</button></td>
+                <td><button onclick="sendMessage('s128')">servo90</button></td>
+                <td><button onclick="sendMessage('s255')">servo180</button></td>
+            </tr>
+        </table>
+        <script>
+           const socket = new WebSocket('ws://localhost:8765');
+
+            socket.onopen = function(event) {
+            // Handle connection open
+            };
+
+            socket.onmessage = function(event) {
+            // Handle received message
+            };
+
+            socket.onclose = function(event) {
+            // Handle connection close
+            };
+
+            function sendMessage(message) {
+            socket.send(message);
+            }
+            window.addEventListener("load", (event) => {
+            new cursoreffects.fairyDustCursor();
+            });
+        </script>
+    </body>
+</html>
