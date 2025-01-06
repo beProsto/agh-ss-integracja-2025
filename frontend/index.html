@@ -74,7 +74,9 @@
             </tr>
         </table>
         <script>
-           const socket = new WebSocket('ws://localhost:8765');
+          const ROBOT_IP = 'ws://localhost:8765'
+
+           const socket = new WebSocket(ROBOT_IP);
 
             socket.onopen = function(event) {
             // Handle connection open
