@@ -9,11 +9,29 @@ IPAddress subnet(255, 255, 255, 0);  // Set subnet mask
 // WebSocket server on port 81
 WebSocketsServer webSocket = WebSocketsServer(81);
 
+// PWM
+const int PWM_CHANNEL_A = 0;    
+const int PWM_CHANNEL_B = 1;    
+const int PWM_FREQ = 500;     
+const int PWM_RESOLUTION = 8;
+const int MAX_DUTY_CYCLE = (int)(pow(2, PWM_RESOLUTION) - 1); 
+const int HALF_DUTY_CYCLE = MAX_DUTY_CYCLE / 2;
+const int MOTOR_PIN_A = 12;
+const int MOTOR_PIN_B = 13;
+
+
+
 // Forward declaration of the webSocketEvent function
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length);
 
 void setup()
 {
+    ledcSetup(PWM_CHANNEL_A, PWM_FREQ, PWM_RESOLUTION);
+    ledcSetup(PWM_CHANNEL_B, PWM_FREQ, PWM_RESOLUTION);
+    ledcAttachPin(MOTOR_PIN_A, PWM_CHANNEL_A);
+    ledcAttachPin(MOTOR_PIN_B, PWM_CHANNEL_B);
+
+
   // Start the serial communication
   Serial.begin(115200);
 
@@ -53,6 +71,8 @@ void loop()
 //  WebSocket event handler
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 {
+  String receivedString;
+
   switch (type)
   {
   case WStype_DISCONNECTED:
@@ -66,7 +86,25 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
   break;
   case WStype_TEXT:
     Serial.printf("Received: %s\n", payload);
-    // Respond to the client (example: send back the received message)
+
+    receivedString = String((char *)payload);
+
+    if (receivedString == "left") {
+      Serial.println("Handling LEFT");
+      ledcWrite(PWM_CHANNEL_A, 0);
+      ledcWrite(PWM_CHANNEL_B, MAX_DUTY_CYCLE);
+    } else if (receivedString == "right") {
+      Serial.println("Handling RIGHT");
+      ledcWrite(PWM_CHANNEL_A, MAX_DUTY_CYCLE);
+      ledcWrite(PWM_CHANNEL_B, 0);
+    } else if (receivedString == "back") {
+      Serial.println("Handling BACK");
+      ledcWrite(PWM_CHANNEL_A, 0);
+      ledcWrite(PWM_CHANNEL_B, 0);
+    } else {
+      Serial.println("Unknown command received.");
+    }
+
     webSocket.sendTXT(num, payload, length);
     break;
   default:
