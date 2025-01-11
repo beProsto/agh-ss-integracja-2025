@@ -1,5 +1,5 @@
-#include <WiFi.h>
-#include <WebSocketsServer.h>
+// #include <WiFi.h>
+// #include <WebSocketsServer.h>
 #include <BluetoothSerial.h>
  
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
@@ -31,6 +31,8 @@ void loop() {
   
   const int btbyte = SerialBT.read();
   if (btbyte == 0) return;
+
+  // if (btbyte == 'q') {}
 
   Serial.write(btbyte);
 }
