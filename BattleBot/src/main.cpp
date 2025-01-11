@@ -1,4 +1,3 @@
-#include <arduino/Arduino.h>
 #include <WiFi.h>
 #include <WebSocketsServer.h>
 #include <BluetoothSerial.h>
@@ -16,12 +15,13 @@ const char *pin = "4321";
 String device_name = "GiantPPBot";
 BluetoothSerial SerialBT;
 
-#define HBRIDGE_FORWARD_PIN 10
-#define HBRIDGE_BACKWARD_PIN 11
+#define HBRIDGE_BACKWARD_PIN 34
+#define HBRIDGE_FORWARD_PIN 35
 
-HBridge h_bridge(HBRIDGE_BACKWARD_PIN, HBRIDGE_FORWARD_PIN);
+HBridge h_bridge{};
 
 void setup() {
+  new(&h_bridge) HBridge(HBRIDGE_BACKWARD_PIN, HBRIDGE_FORWARD_PIN);
   Serial.begin(115200);
   SerialBT.begin(device_name); 
   Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
@@ -30,15 +30,26 @@ void setup() {
 }
  
 void loop() {
-  // if (Serial.available()) {
-  //   SerialBT.write(Serial.read());
-  // }
   delay(20);
   
-  if (!SerialBT.available()) return;
+  if(!SerialBT.available())
+    return;
   
   const int btbyte = SerialBT.read();
   if (btbyte == 0) return;
 
-  Serial.write(btbyte);
+  switch(btbyte){
+    case 'q': 
+      h_bridge.run(true, -1);
+      break;
+    case 'w': 
+      h_bridge.run(false, -1);
+      break;
+    case 'a':
+    case 's':
+      h_bridge.stop();
+      break;
+  }    
+
+  Serial.println("BT input: " + String(btbyte));
 }

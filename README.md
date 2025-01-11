@@ -19,3 +19,7 @@ Communication protocol (which bt msgs do what) `Begin|Stop - Message`:
 - `i`|`k` - Cross
 - `o`|`l` - Start
 - `p`|`;` - Pause
+
+# ESP32 pinout
+- pin 34 - backward Hbridge pin
+- pin 35 - forward Hbridge pin
