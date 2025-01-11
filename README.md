@@ -1,22 +1,21 @@
-# Integracja - starter pack
+# Integracja 2025 - Battle Robto
 
-Wystawianie sieci WiFi i komunikacja z ESP za pomocą WebSocket
+No ground station (better 😎).
+Bluetouch only.
+Zased.
+Redpilled.
+Made to clap dem robot cheeks.
 
-## Backend
+Steering over Bluetooth.
 
-Dodaj rozszerzenie PlatformIO IDE do Visual Studio Code.
-Zbuduj projekt i wgraj kod na płytkę ESP.
-Pamiętaj, aby zmienić nazwę SSID sieci WiFi, aby uniknąć konfliktów z innymi zespołami!
-
-## Frontend
-
-Odpal `python simple_web_server.py` i sprawdź stronkę tutaj: [http://localhost:8000/frontend/](http://localhost:8000/frontend/)
-
-Przykładowy serwer WebSocket znajdziesz w pliku `ws_test_server.py`.
-
-Przy testowaniu na ESP koniecznie zmień wartość zmiennej ROBOT_IP na adres IP Twojej płytki ESP.
-
-
-## Known issues
-
-- Podczas naszych testów zdarzały sie problemy z zasięgiem. Jednym z rozwiązań może byc modyfikacja kodu tak aby ESP łączył sie do istniejącej sieci wifi, a nie sam ją wystawiał.
+Communication protocol (which bt msgs do what) `Begin|Stop - Message`:
+- `q`|`a` - Forward 
+- `w`|`s` - Backward
+- `e`|`d` - Left
+- `r`|`f` - Right
+- `t`|`g` - Triangle 
+- `y`|`h` - Square
+- `u`|`j` - Circle
+- `i`|`k` - Cross
+- `o`|`l` - Start
+- `p`|`;` - Pause
