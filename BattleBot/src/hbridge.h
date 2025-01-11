@@ -1,3 +1,6 @@
+#pragma once
+#include <Arduino.h>
+
 class HBridge
 {
   uint8_t forward_pin;

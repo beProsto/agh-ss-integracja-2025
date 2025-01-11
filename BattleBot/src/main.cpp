@@ -1,8 +1,8 @@
-#include <WiFi.h>
-#include <WebSocketsServer.h>
 #include <BluetoothSerial.h>
 
-#include "motor.h"
+#include "./hbridge.h"
+#include "./servomotor.h"
+ 
  
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
   #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
@@ -15,18 +15,22 @@ const char *pin = "4321";
 String device_name = "GiantPPBot";
 BluetoothSerial SerialBT;
 
-#define HBRIDGE_BACKWARD_PIN 34
-#define HBRIDGE_FORWARD_PIN 35
+#define HBRIDGE_BACKWARD_PIN 2
+#define HBRIDGE_FORWARD_PIN 4
+#define SERVO_PIN 15
 
 HBridge h_bridge{};
+ServoMotor servo{};
 
 void setup() {
-  new(&h_bridge) HBridge(HBRIDGE_BACKWARD_PIN, HBRIDGE_FORWARD_PIN);
   Serial.begin(115200);
   SerialBT.begin(device_name); 
   Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
   SerialBT.setPin(pin);
   Serial.println("Using PIN");
+  
+  new(&h_bridge) HBridge(HBRIDGE_BACKWARD_PIN, HBRIDGE_FORWARD_PIN);
+  new(&servo) ServoMotor(SERVO_PIN);
 }
  
 void loop() {
@@ -48,6 +52,12 @@ void loop() {
     case 'a':
     case 's':
       h_bridge.stop();
+      break;
+    case 'u': 
+      servo.setDegrees(90);
+      break;
+    case 'j':
+      servo.setDegrees(0);
       break;
   }    
 
