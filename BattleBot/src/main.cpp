@@ -29,7 +29,7 @@ void loop() {
   
   if (!SerialBT.available()) return;
   
-  int btbyte = SerialBT.read();
+  const int btbyte = SerialBT.read();
   if (btbyte == 0) return;
 
   Serial.write(btbyte);
