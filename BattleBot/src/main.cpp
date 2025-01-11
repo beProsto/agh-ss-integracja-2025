@@ -35,8 +35,8 @@ void setup()
   WiFi.softAPConfig(local_IP, gateway, subnet);
 
   // Set SSID and password (Make sure password is at least 8 characters)
-  const char *ssid = "ESP32_SoftAP"; // CHANGE ME!
-  const char *password = "yourpassword"; // Ensure this password is at least 8 characters
+  const char *ssid = "BigPPSA"; // CHANGE ME!
+  const char *password = "pipipupu"; // Ensure this password is at least 8 characters
 
   if (WiFi.softAP(ssid, password))
   {
