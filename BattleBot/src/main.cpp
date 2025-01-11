@@ -1,18 +1,26 @@
+#include <arduino/Arduino.h>
 #include <WiFi.h>
 #include <WebSocketsServer.h>
 #include <BluetoothSerial.h>
+
+#include "motor.h"
  
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
-#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+  #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
 #if !defined(CONFIG_BT_SPP_ENABLED)
-#error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
+  #error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
 #endif
  
 const char *pin = "4321"; 
 String device_name = "GiantPPBot";
 BluetoothSerial SerialBT;
- 
+
+#define HBRIDGE_FORWARD_PIN 10
+#define HBRIDGE_BACKWARD_PIN 11
+
+HBridge h_bridge(HBRIDGE_BACKWARD_PIN, HBRIDGE_FORWARD_PIN);
+
 void setup() {
   Serial.begin(115200);
   SerialBT.begin(device_name); 
